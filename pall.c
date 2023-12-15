@@ -2,13 +2,19 @@
 
 /**
  * pall - prints all values on stack
- * @stack : pointer to the stack structure
+ * @stack :double pointer to the beginning ofstack structure
  */
 
-void pall(struct Stack *stack)
+void pall(stack_t **stack, unsigned int line_number)
 {
-	int i;
+	stack_t *current;
+	(void)line_number;
 
-	for (i = stack->top; i >= 0; i--)
-		printf("%d\n", stack->data[i]);
+	current = *stack;
+
+	while (current != NULL)
+	{
+		printf("%d\n", current->n);
+		current = current->next;
+	}
 }
