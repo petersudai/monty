@@ -8,8 +8,6 @@
  * Return: EXIT_SUCCESS if successful, EXIT_FAILURE if error
  */
 
-stack_t *stack = NULL;
-
 int main(int argc, char *argv[])
 {
 	if (argc != 2)

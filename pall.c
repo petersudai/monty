@@ -3,6 +3,7 @@
 /**
  * pall - prints all values on stack
  * @stack :double pointer to the beginning ofstack structure
+ * @line_number: number of line in the monty bytcode file
  */
 
 void pall(stack_t **stack, unsigned int line_number)
