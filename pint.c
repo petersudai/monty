@@ -1,76 +1,104 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "monty.h"
 
-#define STACK_SIZE 100
+/**
+ * push - push an element on to stack
+ * @stack: pointer  to the stack structure
+ * @value: value to be oushed on to stack
+ * @line_number: the line number in the bytecode
+ */
 
-int stack[STACK_SIZE];
-int top = -1;
-
-
-void push(int value, int line_number) {
-    if (top == STACK_SIZE - 1) {
-        fprintf(stderr, "L%d: Stack overflow\n", line_number);
-        exit(EXIT_FAILURE);
-    } else {
-        stack[++top] = value;
-    }
+void push(struct Stack *stack, int value, int line_number)
+{
+	if (stack->top == STACK_SIZE - 1)
+	{
+		fprintf(stderr, "L%d: Stack overflow\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		stack->data[++stack->top] = value;
+	}
 }
 
+/**
+ * pint - function to print value at top of stack
+ * @stack: pointer to the stack structure
+ * @line_number: line number in bytecode
+ */
 
-void pint(int line_number) {
-    if (top == -1) {
-        fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-        exit(EXIT_FAILURE);
-    } else {
-        printf("%d\n", stack[top]);
-    }
+void pint(struct Stack *stack, int line_number)
+{
+	if (stack->top == -1)
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		printf("%d\n", stack->data[stack->top]);
+	}
 }
 
-void pall() {
-    int i;
-    for (i = top; i >= 0; i--) {
-        printf("%d\n", stack[i]);
-    }
+/**
+ * pall - prints all values on stack
+ * @stack : pointer to the stack structure
+ */
+
+void pall(struct Stack *stack)
+{
+	int i;
+
+	for (i = stack->top; i >= 0; i--)
+	{
+		printf("%d\n", stack->data[i]);
+	}
 }
 
-int main() {
-    char *bytecode[] = {
-        "push 1",
-        "pint",
-        "push 2",
-        "pint",
-        "push 3",
-        "pint",
-        "pall"
-    };
+/**
+ * main - main function
+ *
+ * Return: void
+ */
 
-    int line_number = 1;
-    size_t i;
+int main(void)
+{
+	struct Stack myStack;
+	size_t i;
+	int line_number;
 
-    
-    for (i = 0; i < sizeof(bytecode) / sizeof(bytecode[0]); i++) {
-        char opcode[10];
-        int value;
+	char *bytecode[] = { "push 1", "push 2", "pint"
+		, "push 3", "pint", "pall" };
 
-        if (sscanf(bytecode[i], "%s %d", opcode, &value) == 2) {
-            if (strcmp(opcode, "push") == 0) {
-                push(value, line_number);
-            } else if (strcmp(opcode, "pint") == 0) {
-                pint(line_number);
-            } else {
-                fprintf(stderr, "L%d: Unknown opcode: %s\n", line_number, opcode);
-                exit(EXIT_FAILURE);
-            }
-        } else if (strcmp(opcode, "pall") == 0) {
-            pall();
-        } else {
-            fprintf(stderr, "L%d: Invalid instruction: %s\n", line_number, bytecode[i]);
-            exit(EXIT_FAILURE);
-        }
+	line_number = 1;
+	myStack.top = -1;
+	for (i = 0; i < sizeof(bytecode) / sizeof(bytecode[0]); i++)
+	{
+		char opcode[10];
+		int value;
 
-        line_number++;
-    }
-
-    return 0;
+		if (sscanf(bytecode[i], "%s %d", opcode, &value) == 2)
+		{
+			if (strcmp(opcode, "push") == 0)
+				push(&myStack, value, line_number);
+			else if (strcmp(opcode, "pint") == 0)
+				pint(&myStack, line_number);
+			else
+			{
+				fprintf(stderr, "L%d: Unknown opcode: %s\n", line_number, opcode);
+				exit(EXIT_FAILURE);
+			}
+		}
+		else if (strcmp(opcode, "pall") == 0)
+			pall(&myStack);
+		else
+		{
+			fprintf(stderr, "L%d: Invalid instruction: %s\n", line_number, bytecode[i]);
+			exit(EXIT_FAILURE);
+		}
+		line_number++;
+	}
+	return (0);
 }
