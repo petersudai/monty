@@ -7,6 +7,7 @@
  *
  * Return: EXIT_SUCCESS if successful, EXIT_FAILURE if error
  */
+stack_t* stack;
 
 int main(int argc, char *argv[])
 {
