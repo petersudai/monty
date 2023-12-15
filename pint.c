@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define STACK_SIZE 100
 
 int stack[STACK_SIZE];
-int top = -1;  // Initialize the top of the stack
+int top = -1;
 
-// Function to push an element onto the stack
+
 void push(int value, int line_number) {
     if (top == STACK_SIZE - 1) {
         fprintf(stderr, "L%d: Stack overflow\n", line_number);
@@ -16,7 +17,7 @@ void push(int value, int line_number) {
     }
 }
 
-// Function to print the value at the top of the stack
+
 void pint(int line_number) {
     if (top == -1) {
         fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
@@ -26,7 +27,6 @@ void pint(int line_number) {
     }
 }
 
-// Function to print all values on the stack
 void pall() {
     int i;
     for (i = top; i >= 0; i--) {
@@ -34,9 +34,7 @@ void pall() {
     }
 }
 
-int main(int argc, char *argv[]) {
-    // Read your bytecode file or commands from some source
-    // For simplicity, I'm hardcoding the example bytecode
+int main() {
     char *bytecode[] = {
         "push 1",
         "pint",
@@ -48,13 +46,13 @@ int main(int argc, char *argv[]) {
     };
 
     int line_number = 1;
+    size_t i;
 
-    // Iterate over each line in the bytecode
-    for (int i = 0; i < sizeof(bytecode) / sizeof(bytecode[0]); i++) {
+    
+    for (i = 0; i < sizeof(bytecode) / sizeof(bytecode[0]); i++) {
         char opcode[10];
         int value;
 
-        // Parse the line (you may need a more robust parser)
         if (sscanf(bytecode[i], "%s %d", opcode, &value) == 2) {
             if (strcmp(opcode, "push") == 0) {
                 push(value, line_number);
