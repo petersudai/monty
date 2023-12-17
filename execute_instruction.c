@@ -13,10 +13,11 @@ void execute_instruction(char *opcode, int line_number)
 		{"push", push},
 		{"pall", pall},
 		{"pint", pint},
-		{"nop", nop},
 		{"pop", pop},
 		{"swap", swap},
 		{"add", add},
+		{"sub", sub},
+		{"nop", nop},
 		{NULL, NULL}};
 
 	for (i = 0; instructions[i].opcode != NULL; i++)
