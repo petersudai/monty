@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	process_file(argv[1]);
-
+	
+	free_stack();
 	return (EXIT_SUCCESS);
 }
 
