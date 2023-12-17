@@ -1,28 +1,6 @@
 #include "monty.h"
 
 /**
- * main - main function
- * @argc: number of command line arguments
- * @argv: array of command line strings
- *
- * Return: EXIT_SUCCESS if successful, EXIT_FAILURE if error
- */
-stack_t* stack;
-
-int main(int argc, char *argv[])
-{
-	if (argc != 2)
-	{
-		fprintf(stderr, "Usage: %s <file>\n", argv[0]);
-		exit(EXIT_FAILURE);
-	}
-	process_file(argv[1]);
-	
-	free_stack();
-	return (EXIT_SUCCESS);
-}
-
-/**
  * process_file - Process the Monty bytecode file.
  * @file_path: Path to the Monty bytecode file.
  */
@@ -72,4 +50,26 @@ void free_stack(void)
 		stack = stack->next;
 		free(temp);
 	}
+}
+
+/**
+ * main - main function
+ * @argc: number of command line arguments
+ * @argv: array of command line strings
+ *
+ * Return: EXIT_SUCCESS if successful, EXIT_FAILURE if error
+ */
+stack_t* stack;
+
+int main(int argc, char *argv[])
+{
+	if (argc != 2)
+	{
+		fprintf(stderr, "Usage: %s <file>\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	process_file(argv[1]);
+
+	free_stack();
+	return (EXIT_SUCCESS);
 }
