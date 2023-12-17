@@ -73,14 +73,14 @@ stack_t *create_node(int value)
  */
 int is_numeric(char *str)
 {
-	if (str == NULL || *str == '\0')
+	if (!str)
 		return (0);
 	if (*str == '-')
 		str++;
 
 	while (*str)
 	{
-		if (*str < '0' || *str > '9')
+		if (!isdigit(*str))
 			return (0);
 		str++;
 	}
